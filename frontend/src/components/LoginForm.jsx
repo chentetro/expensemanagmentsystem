@@ -2,6 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import expenseApi from '../services/expenseApi';
 import { CostsContext } from '../contexts/CostsContext.jsx';
+import { Alert, Button, Stack, TextField, Typography } from '@mui/material';
 
 const LoginForm = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -48,17 +49,31 @@ const LoginForm = () => {
     };
 
     return (
-        <form onSubmit={handleLogin} className="auth-form">
-            <h2>Login</h2>
-            {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
-            
-            <input name="email" type="email" placeholder="Email" onChange={handleChange} required />
-            <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
-            
-            <button type="submit" disabled={isLoading}>
+        <Stack component="form" onSubmit={handleLogin} spacing={2} sx={{ width: '100%' }}>
+            <Typography variant="h5" textAlign="center">Login</Typography>
+            {error && <Alert severity="error">{error}</Alert>}
+
+            <TextField
+                name="email"
+                type="email"
+                label="Email"
+                onChange={handleChange}
+                required
+                fullWidth
+            />
+            <TextField
+                name="password"
+                type="password"
+                label="Password"
+                onChange={handleChange}
+                required
+                fullWidth
+            />
+
+            <Button type="submit" variant="contained" disabled={isLoading}>
                 {isLoading ? 'Logging in...' : 'Login'}
-            </button>
-        </form>
+            </Button>
+        </Stack>
     );
 };
 

@@ -1,6 +1,7 @@
 import React, { useContext } from 'react';
 import { CostsContext } from '../contexts/CostsContext.jsx';
 import expenseApi from '../services/expenseApi';
+import { Button, List, ListItem, ListItemText, Paper, Typography } from '@mui/material';
 
 const CostList = () => {
     const { costs, fetchCosts } = useContext(CostsContext);
@@ -17,14 +18,32 @@ const CostList = () => {
     };
 
     return (
-        <ul>
-            {costs.length > 0 ? costs.map((cost) => (
-                <li key={cost._id}>
-                    {cost.description} - {cost.sum} - {cost.currency} -({cost.category}- {new Date(cost.createdAt).toLocaleDateString()})
-                    <button onClick={() => removecost(cost._id)}>Delete</button>
-                </li>
-            )) : <p>No costs found.</p>}
-        </ul>
+        <Paper variant="outlined">
+            {costs.length > 0 ? (
+                <List>
+                    {costs.map((cost) => (
+                        <ListItem
+                            key={cost._id}
+                            divider
+                            secondaryAction={
+                                <Button color="error" onClick={() => removecost(cost._id)}>
+                                    Delete
+                                </Button>
+                            }
+                        >
+                            <ListItemText
+                                primary={`${cost.description} - ${cost.sum} ${cost.currency}`}
+                                secondary={`${cost.category} - ${new Date(cost.createdAt).toLocaleDateString()}`}
+                                primaryTypographyProps={{ textTransform: 'capitalize' }}
+                                secondaryTypographyProps={{ textTransform: 'capitalize' }}
+                            />
+                        </ListItem>
+                    ))}
+                </List>
+            ) : (
+                <Typography sx={{ p: 2 }}>No costs found.</Typography>
+            )}
+        </Paper>
     );
 };
 

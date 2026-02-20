@@ -6,6 +6,15 @@ import TotalBarChart from '../components/TotalBarChart';
 import CategoryPieChart from '../components/CategoryPieChart';
 import axios from 'axios';
 import { CostsContext } from '../contexts/CostsContext.jsx';
+import {
+    Alert,
+    Box,
+    CircularProgress,
+    Container,
+    Paper,
+    Stack,
+    Typography
+} from '@mui/material';
 
 
 const StatisticsPage = () => {
@@ -79,38 +88,59 @@ const StatisticsPage = () => {
     );
 
      if (!isAuthenticated) {
-        return <p style={{ padding: '20px' }}>Please log in to view your bar and pie.</p>;
+        return (
+            <Container sx={{ py: 4 }}>
+                <Alert severity="info">Please log in to view your bar and pie.</Alert>
+            </Container>
+        );
     }
 
 
     return (
-        <div style={{ padding: '20px' }}>
-            <h1>Monthly Expense Statistics</h1>
-            <div style={{ display: 'flex', gap: '15px', marginBottom: '20px' }}>
-                <YearMonthPicker onSearch={fetchStats} />
-                <CurrencyPicker
-                    value={selectedCurrency}
-                    onChange={(newCurrency) => setSelectedCurrency(newCurrency)}
-                />
-            </div>
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+            <Paper elevation={2} sx={{ p: { xs: 2, md: 3 } }}>
+                <Typography variant="h4" gutterBottom>
+                    Monthly Expense Statistics
+                </Typography>
 
-            {loading && <p>Loading data...</p>}
+                <Stack
+                    direction={{ xs: 'column', md: 'row' }}
+                    spacing={2}
+                    alignItems={{ xs: 'stretch', md: 'center' }}
+                    sx={{ mb: 3 }}
+                >
+                    <YearMonthPicker onSearch={fetchStats} />
+                    <CurrencyPicker
+                        selectedCurrency={selectedCurrency}
+                        onChange={(newCurrency) => setSelectedCurrency(newCurrency)}
+                    />
+                </Stack>
 
-            {/* Render both charts */}
-            {!loading && categoriesData && (total > 0 || pieArray.length > 0) ? (
-                <div style={{ display: 'flex', flexWrap: 'wrap', gap: '30px', justifyContent: 'center' }}>
-                    <CategoryPieChart pieData={pieArray} currency={selectedCurrency} />
-                    <TotalBarChart total={total} currency={selectedCurrency} />
-                </div>
-            ) : (
-                !loading && categoriesData && (
-                    <p style={{ textAlign: 'center', marginTop: '30px' }}>
-                        No expenses found for the selected period.
-                    </p>
-                )
-            )}
-            
-        </div>
+                {loading && (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', py: 3 }}>
+                        <CircularProgress />
+                    </Box>
+                )}
+
+                {!loading && categoriesData && (total > 0 || pieArray.length > 0) ? (
+                    <Stack
+                        direction={{ xs: 'column', xl: 'row' }}
+                        spacing={3}
+                        justifyContent="center"
+                        alignItems="center"
+                    >
+                        <CategoryPieChart pieData={pieArray} currency={selectedCurrency} />
+                        <TotalBarChart total={total} currency={selectedCurrency} />
+                    </Stack>
+                ) : (
+                    !loading && categoriesData && (
+                        <Typography align="center" sx={{ mt: 3 }}>
+                            No expenses found for the selected period.
+                        </Typography>
+                    )
+                )}
+            </Paper>
+        </Container>
     );
 };
 
