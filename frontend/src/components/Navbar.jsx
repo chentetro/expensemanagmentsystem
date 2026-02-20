@@ -5,8 +5,7 @@
 import React from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { CostsContext } from '../contexts/CostsContext.jsx';
-import { Box, Button, Container, Stack, Typography } from '@mui/material';
-import FactCheckOutlinedIcon from '@mui/icons-material/FactCheckOutlined';
+import { Box, Container, Stack, Typography } from '@mui/material';
 
 const Navbar = () => {
     const { isAuthenticated, handleLogout } = React.useContext(CostsContext);
@@ -51,7 +50,12 @@ const Navbar = () => {
                             py: 1,
                         }}
                     >
-                        <FactCheckOutlinedIcon fontSize="small" />
+                        <Box
+                            component="img"
+                            src="/favicon.png"
+                            alt="Cost Manager logo"
+                            sx={{ width: 22, height: 22 }}
+                        />
                         Cost Manager
                     </Typography>
 
