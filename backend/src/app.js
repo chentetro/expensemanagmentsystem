@@ -1,9 +1,10 @@
 import express from 'express';
-import cors from 'cors'; // מומלץ להוסיף כדי לאפשר חיבור מהפרונט בעתיד
+import cors from 'cors';
 import cookieParser from 'cookie-parser';
-import userRouter from './routes/user.routes.js';
-import costRouter from './routes/cost.routes.js';
-import reportRouter from './routes/report.routes.js';
+import userRouter from './modules/users/user.routes.js';
+import costRouter from './modules/costs/cost.routes.js';
+import reportRouter from './modules/reports/report.routes.js';
+import { errorHandler, notFoundHandler } from './middleware/error.middleware.js';
 
 const app = express();
 
@@ -13,12 +14,13 @@ app.use(cookieParser());
 app.use(cors({ 
     origin: true,
     credentials: true 
-})); // מאפשר גישה מדפדפנים שונים
+}));
 
-// הגדרת הנתיבים - שינוי מ-"/api/users" ל-"/api" כדי לעמוד בדרישות
 app.use("/api/users", userRouter);
 app.use("/api/costs", costRouter);
 app.use("/api/reports", reportRouter);
 
+app.use(notFoundHandler);
+app.use(errorHandler);
 
 export default app;

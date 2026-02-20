@@ -34,11 +34,20 @@ const RegisterForm = ({ setIsLogin }) => {
             setIsLogin(true); 
         } catch (err) {
             // סעיף 3: טיפול בשגיאות ספציפיות
+            // בדיקה אם זו שגיאת רשת (השרת לא זמין)
+            if (!err.response) {
+                setError('לא ניתן להתחבר לשרת. אנא ודא שהשרת פועל.');
+                console.error('Network error:', err.message);
+                return;
+            }
+            
             const status = err.response?.status;
             if (status === 409) {
                 setError('המשתמש (אימייל או ת"ז) כבר קיים במערכת');
             } else if (status === 400) {
-                setError('חלק מהנתונים שהזנת אינם תקינים');
+                setError(err.response?.data?.message || 'חלק מהנתונים שהזנת אינם תקינים');
+            } else if (status === 500) {
+                setError(err.response?.data?.message || 'שגיאת שרת. אנא נסה שוב מאוחר יותר.');
             } else {
                 setError(err.response?.data?.message || 'שגיאה בתהליך ההרשמה');
             }
