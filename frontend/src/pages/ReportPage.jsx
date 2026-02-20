@@ -2,6 +2,19 @@ import React, { useState, useContext } from 'react';
 import expenseApi from '../services/expenseApi';
 import YearMonthPicker from '../components/YearMonthPicker.jsx';
 import { CostsContext } from '../contexts/CostsContext.jsx';
+import {
+    Alert,
+    Box,
+    CircularProgress,
+    Container,
+    Divider,
+    List,
+    ListItem,
+    ListItemText,
+    Paper,
+    Stack,
+    Typography
+} from '@mui/material';
 
 const ReportPage = () => {
     const [reportData, setReportData] = useState(null);
@@ -23,42 +36,61 @@ const ReportPage = () => {
 
     // 1. If not logged in, show this and stop here
     if (!isAuthenticated) {
-        return <p style={{ padding: '20px' }}>Please log in to view your reports.</p>;
+        return (
+            <Container sx={{ py: 4 }}>
+                <Alert severity="info">Please log in to view your reports.</Alert>
+            </Container>
+        );
     }
 
     return (
-        <div style={{ padding: '20px' }}>
-            <h1>Monthly Expense Report</h1>
-            <YearMonthPicker onSearch={fetchReport} />
-            <hr />
+        <Container maxWidth="lg" sx={{ py: 4 }}>
+            <Paper elevation={2} sx={{ p: { xs: 2, md: 3 } }}>
+                <Typography variant="h4" gutterBottom>
+                    Monthly Expense Report
+                </Typography>
+                <YearMonthPicker onSearch={fetchReport} />
+                <Divider sx={{ my: 3 }} />
 
-            {loading && <p>Loading data from server...</p>}
+                {loading && (
+                    <Box sx={{ display: 'flex', justifyContent: 'center', py: 2 }}>
+                        <CircularProgress />
+                    </Box>
+                )}
 
-            {reportData && reportData.data ? (
-                <div>
-                    <h2>Expense Details</h2>
-                    
-                    {Object.keys(reportData.data).map((category) => (
-                        <div key={category} style={{ marginBottom: '15px' }}>
-                            <h3 style={{ textTransform: 'capitalize' }}>{category}</h3>
-                            {reportData.data[category].length > 0 ? (
-                                <ul>
-                                    {reportData.data[category].map((item, index) => (
-                                        <li key={index}>
-                                            Day {item.day}: {item.description} - <strong>{item.sum} {item.currency}</strong>
-                                        </li>
-                                    ))}
-                                </ul>
-                            ) : (
-                                <p>No expenses in this category.</p>
-                            )}
-                        </div>
-                    ))}
-                </div>
-            ) : (
-                !loading && <p>Select month and year, then click "Show Report"</p>
-            )}
-        </div>
+                {reportData && reportData.data ? (
+                    <Stack spacing={2}>
+                        <Typography variant="h6">Expense Details</Typography>
+
+                        {Object.keys(reportData.data).map((category) => (
+                            <Paper key={category} variant="outlined" sx={{ p: 2 }}>
+                                <Typography variant="subtitle1" sx={{ textTransform: 'capitalize', mb: 1 }}>
+                                    {category}
+                                </Typography>
+                                {reportData.data[category].length > 0 ? (
+                                    <List dense>
+                                        {reportData.data[category].map((item, index) => (
+                                            <ListItem key={index} divider>
+                                                <ListItemText
+                                                    primary={`Day ${item.day}: ${item.description}`}
+                                                    secondary={`${item.sum} ${item.currency}`}
+                                                />
+                                            </ListItem>
+                                        ))}
+                                    </List>
+                                ) : (
+                                    <Typography variant="body2">No expenses in this category.</Typography>
+                                )}
+                            </Paper>
+                        ))}
+                    </Stack>
+                ) : (
+                    !loading && (
+                        <Typography>Select month and year, then click "Show Report".</Typography>
+                    )
+                )}
+            </Paper>
+        </Container>
     );
 };
 

@@ -1,4 +1,12 @@
 import React, { useState } from 'react';
+import {
+    Button,
+    FormControl,
+    InputLabel,
+    MenuItem,
+    Select,
+    Stack
+} from '@mui/material';
 
 const YearMonthPicker = ({ onSearch }) => {
     const currentYear = new Date().getFullYear();
@@ -24,26 +32,45 @@ const YearMonthPicker = ({ onSearch }) => {
     };
 
     return (
-        <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
-            <div>
-                <label>Month: </label>
-                <select name="month" value={filters.month} onChange={handleChange}>
+        <Stack
+            component="form"
+            direction={{ xs: 'column', sm: 'row' }}
+            spacing={1.5}
+            alignItems={{ xs: 'stretch', sm: 'center' }}
+            onSubmit={handleSubmit}
+        >
+            <FormControl size="small" sx={{ minWidth: 120 }}>
+                <InputLabel id="month-select-label">Month</InputLabel>
+                <Select
+                    labelId="month-select-label"
+                    name="month"
+                    value={filters.month}
+                    label="Month"
+                    onChange={handleChange}
+                >
                     {Array.from({ length: 12 }, (_, i) => (
-                        <option key={i + 1} value={i + 1}>{i + 1}</option>
+                        <MenuItem key={i + 1} value={i + 1}>{i + 1}</MenuItem>
                     ))}
-                </select>
-            </div>
+                </Select>
+            </FormControl>
 
-            <div>
-                <label>Year: </label>
-                <select name="year" value={filters.year} onChange={handleChange}>
+            <FormControl size="small" sx={{ minWidth: 120 }}>
+                <InputLabel id="year-select-label">Year</InputLabel>
+                <Select
+                    labelId="year-select-label"
+                    name="year"
+                    value={filters.year}
+                    label="Year"
+                    onChange={handleChange}
+                >
                     {years.map(year => (
-                        <option key={year} value={year}>{year}</option>
+                        <MenuItem key={year} value={year}>{year}</MenuItem>
                     ))}
-                </select>
-                <button type="submit" style={{ marginLeft: '10px' }}>Show Report</button>
-            </div>
-        </form>
+                </Select>
+            </FormControl>
+
+            <Button type="submit" variant="contained">Show Report</Button>
+        </Stack>
     );
 };
 

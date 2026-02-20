@@ -13,7 +13,7 @@ export const validateCreateCostInput = (body) => {
     }
 
     if (!ALLOWED_CURRENCIES.includes(currency)) {
-        throw new ApiError(400, 'Invalid currency. Allowed: USD, ILS, GBP, EURO');
+        throw new ApiError(400, 'Invalid currency. Allowed: USD, ILS, GBP, EUR');
     }
 
     if (Number(sum) <= 0) {

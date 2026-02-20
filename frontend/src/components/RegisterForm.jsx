@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import expenseApi from '../services/expenseApi';
+import { Alert, Button, Stack, TextField } from '@mui/material';
 
 const RegisterForm = ({ setIsLogin }) => {
     const [formData, setFormData] = useState({
@@ -56,24 +57,29 @@ const RegisterForm = ({ setIsLogin }) => {
     };
 
     return (
-        <form onSubmit={handleRegister} className="auth-form">
-            <h2>Create New Account</h2>
-            
-            {/* Show error message inline */}
-            {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
+        <Stack component="form" onSubmit={handleRegister} spacing={2} sx={{ width: '100%' }}>
+            {error && <Alert severity="error">{error}</Alert>}
 
-            <input name="id" type="number" placeholder="ID Number" onChange={handleChange} required />
-            <input name="first_name" placeholder="First Name" onChange={handleChange} required />
-            <input name="last_name" placeholder="Last Name" onChange={handleChange} required />
-            <input name="email" type="email" placeholder="Email" onChange={handleChange} required />
-            <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
-            <input name="birthday" type="date" placeholder="Birthday" onChange={handleChange} required />
-            
-            {/* Disable while loading to prevent duplicate submits */}
-            <button type="submit" disabled={isLoading}>
+            <TextField name="id" type="number" label="ID Number" value={formData.id} onChange={handleChange} required fullWidth />
+            <TextField name="first_name" label="First Name" value={formData.first_name} onChange={handleChange} required fullWidth />
+            <TextField name="last_name" label="Last Name" value={formData.last_name} onChange={handleChange} required fullWidth />
+            <TextField name="email" type="email" label="Email" value={formData.email} onChange={handleChange} required fullWidth />
+            <TextField name="password" type="password" label="Password" value={formData.password} onChange={handleChange} required fullWidth />
+            <TextField
+                name="birthday"
+                type="date"
+                label="Birthday"
+                value={formData.birthday}
+                onChange={handleChange}
+                required
+                fullWidth
+                InputLabelProps={{ shrink: true }}
+            />
+
+            <Button type="submit" variant="contained" fullWidth disabled={isLoading}>
                 {isLoading ? 'Creating account...' : 'Create Account'}
-            </button>
-        </form>
+            </Button>
+        </Stack>
     );
 };
 
