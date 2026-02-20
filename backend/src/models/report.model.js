@@ -1,4 +1,4 @@
-import mongoose from "mongoose";//כדי לממש את ה-Computed Design Pattern הנדרש, ניצור מודל שישמור דוחות שכבר חושבו כדי לחסוך זמן ריצה בעתיד.
+import mongoose from "mongoose";// Implements the required computed design pattern by caching precomputed reports.
 
 const reportSchema = new mongoose.Schema({
     userid:
@@ -8,7 +8,7 @@ const reportSchema = new mongoose.Schema({
     month: 
     { type: Number, required: true },
     data: 
-    { type: Object, required: true } // כאן נשמור את מבנה ה-JSON של הדו"ח
+    { type: Object, required: true } // Stores the report JSON structure
 });
 
 export const Report = mongoose.model("Report", reportSchema);

@@ -1,4 +1,4 @@
-import mongoose from "mongoose";//כאן עלינו להקפיד על הקטגוריות הספציפיות שהוגדרו: אוכל, בריאות, דיור, ספורט וחינוך.
+import mongoose from "mongoose";// Keep only the required categories: food, health, housing, sport, and education.
 import { ALLOWED_CURRENCIES, COST_CATEGORIES } from "../constants/enums.js";
 
 const costSchema = new mongoose.Schema({
@@ -10,11 +10,11 @@ const costSchema = new mongoose.Schema({
         enum: COST_CATEGORIES
     },
     sum: { type: Number, required: true },
-    // השדה החדש שהוספנו לפי דרישות הפרויקט
+    // New field added according to project requirements
     currency: { 
         type: String, 
         required: true, 
-        enum: ALLOWED_CURRENCIES, // המטבעות המותרים לפי המסמך
+        enum: ALLOWED_CURRENCIES, // Allowed currencies according to the specification
         default: 'USD' 
     },
    

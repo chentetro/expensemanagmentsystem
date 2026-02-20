@@ -15,7 +15,7 @@ const startServer = async () => {
             throw error;
         });
 
-        // שימוש ב-Backticks כדי שהפורט יוצג נכון
+        // Use backticks so the port is interpolated correctly
         const port = process.env.PORT || 3000;
         app.listen(port, () => {
             console.log(`server running on port ${port}`);
@@ -26,5 +26,5 @@ const startServer = async () => {
     }
 };
 
-// חשוב: הקריאה לפונקציה חייבת להיות מחוץ לסוגריים שלה!
+// Important: keep the function call outside its declaration block
 startServer();

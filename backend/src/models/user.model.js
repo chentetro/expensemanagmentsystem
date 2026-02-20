@@ -1,4 +1,4 @@
-import mongoose,{Schema} from "mongoose";//מודל משתמש כולל שדות של אימייל וסיסמה להתחברות
+import mongoose,{Schema} from "mongoose";// User model including email and password fields for authentication
 
 const userSchema = new Schema({
     id:{

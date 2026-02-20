@@ -2,11 +2,11 @@ import jwt from 'jsonwebtoken';
 import logger from '../config/logger.js';
 
 export const verifyToken = (req, res, next) => {
-    // 1. חילוץ הטוקן מהעוגיות במקום מה-Header
-    // שימי לב: זה דורש התקנה של 'cookie-parser' ב-app.js
+    // 1. Extract token from cookies instead of the Authorization header
+    // Note: this requires 'cookie-parser' to be configured in app.js
     const token = req.cookies.token; 
 
-    // 2. בדיקה אם הטוקן קיים
+    // 2. Validate token presence
     if (!token) {
         logger.warn({ 
             method: req.method, 
@@ -18,10 +18,10 @@ export const verifyToken = (req, res, next) => {
     }
 
     try {
-        // 3. אימות הטוקן נשאר אותו דבר
+        // 3. Verify token (same logic as before)
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         
-        // 4. הזרקת נתוני המשתמש
+        // 4. Attach decoded user payload to the request
         req.user = decoded;
         
         next();
