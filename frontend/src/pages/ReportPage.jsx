@@ -28,7 +28,6 @@ const ReportPage = () => {
             setReportData(response.data); 
         } catch (error) {
             console.error(error);
-            alert('Error loading report.');
         } finally {
             setLoading(false);
         }
