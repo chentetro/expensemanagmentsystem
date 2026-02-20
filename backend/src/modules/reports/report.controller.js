@@ -1,3 +1,7 @@
+/**
+ * Controller: report request handlers.
+ */
+
 import logger from '../../config/logger.js';
 import asyncHandler from '../../utils/asyncHandler.js';
 import { buildOrGetMonthlyReport } from './report.service.js';

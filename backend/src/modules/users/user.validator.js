@@ -1,3 +1,7 @@
+/**
+ * Validator: user registration and login input validation.
+ */
+
 import ApiError from '../../utils/apiError.js';
 
 export const validateRegisterInput = (body) => {

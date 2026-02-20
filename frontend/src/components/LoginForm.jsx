@@ -1,3 +1,7 @@
+/**
+ * Component: login form with email and password.
+ */
+
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import expenseApi from '../services/expenseApi';

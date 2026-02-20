@@ -1,3 +1,7 @@
+/**
+ * Component: navigation bar with links to dashboard, report, and charts.
+ */
+
 import React from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { CostsContext } from '../contexts/CostsContext.jsx';

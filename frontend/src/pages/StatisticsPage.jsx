@@ -1,3 +1,7 @@
+/**
+ * Page: statistics with bar chart and pie chart by category.
+ */
+
 import React, { useState, useEffect, useMemo ,useContext} from 'react';
 import expenseApi from '../services/expenseApi';
 import YearMonthPicker from '../components/YearMonthPicker';

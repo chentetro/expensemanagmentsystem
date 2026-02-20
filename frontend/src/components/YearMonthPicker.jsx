@@ -1,3 +1,7 @@
+/**
+ * Component: year and month selector for report/charts.
+ */
+
 import React, { useState } from 'react';
 import {
     Button,

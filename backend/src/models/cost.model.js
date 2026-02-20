@@ -1,4 +1,8 @@
-import mongoose from "mongoose";// Keep only the required categories: food, health, housing, sport, and education.
+/**
+ * Model: Cost/expense schema with category, sum, and currency.
+ */
+
+import mongoose from "mongoose";
 import { ALLOWED_CURRENCIES, COST_CATEGORIES } from "../constants/enums.js";
 
 const costSchema = new mongoose.Schema({

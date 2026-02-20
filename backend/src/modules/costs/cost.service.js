@@ -1,3 +1,7 @@
+/**
+ * Service: cost CRUD operations and report invalidation.
+ */
+
 import { Cost } from '../../models/cost.model.js';
 import { Report } from '../../models/report.model.js';
 import ApiError from '../../utils/apiError.js';

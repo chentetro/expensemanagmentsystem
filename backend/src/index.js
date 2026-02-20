@@ -1,3 +1,7 @@
+/**
+ * Entry point: starts server and connects to database.
+ */
+
 import dotenv from 'dotenv';
 import connectDB from './config/database.js';
 import app from './app.js';

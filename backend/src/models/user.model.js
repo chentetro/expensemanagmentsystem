@@ -1,4 +1,8 @@
-import mongoose,{Schema} from "mongoose";// User model including email and password fields for authentication
+/**
+ * Model: User schema for authentication (email, password, profile fields).
+ */
+
+import mongoose,{Schema} from "mongoose";
 
 const userSchema = new Schema({
     id:{

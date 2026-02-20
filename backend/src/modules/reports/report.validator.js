@@ -1,3 +1,7 @@
+/**
+ * Validator: report query params (year, month) validation.
+ */
+
 import ApiError from '../../utils/apiError.js';
 
 export const validateReportQuery = (query) => {

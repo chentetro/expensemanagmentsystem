@@ -1,3 +1,7 @@
+/**
+ * Component: user registration form.
+ */
+
 import React, { useState } from 'react';
 import expenseApi from '../services/expenseApi';
 import { Alert, Button, Stack, TextField } from '@mui/material';

@@ -1,3 +1,7 @@
+/**
+ * Express app: middleware, routes, CORS, and error handling.
+ */
+
 import express from 'express';
 import cors from 'cors';
 import cookieParser from 'cookie-parser';

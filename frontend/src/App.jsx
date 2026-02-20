@@ -1,3 +1,7 @@
+/**
+ * Root component: routing and layout with CostsProvider.
+ */
+
 import { BrowserRouter as Router, Routes, Route, Navigate } from 'react-router-dom';
 import Navbar from './components/Navbar';
 import LoginPage from './pages/LoginPage';

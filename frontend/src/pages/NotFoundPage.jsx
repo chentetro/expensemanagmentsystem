@@ -1,3 +1,7 @@
+/**
+ * Page: 404 fallback with redirect to login.
+ */
+
 import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 

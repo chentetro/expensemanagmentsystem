@@ -1,3 +1,8 @@
+/**
+ * ESLint Configuration
+ * This file defines linting rules for frontend JavaScript and JSX files.
+ * It enables React Hooks rules, Vite React refresh checks, and browser globals.
+ */
 import js from '@eslint/js'
 import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'

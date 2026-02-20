@@ -1,3 +1,7 @@
+/**
+ * Config: MUI theme (palette, typography).
+ */
+
 import { createTheme } from '@mui/material/styles';
 
 const theme = createTheme({

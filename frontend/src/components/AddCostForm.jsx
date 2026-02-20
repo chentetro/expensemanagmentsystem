@@ -1,3 +1,7 @@
+/**
+ * Component: add cost form with category, sum, currency, date.
+ */
+
 import React, { useState, useContext } from 'react';
 import { CostsContext } from '../contexts/CostsContext.jsx';
 import expenseApi from '../services/expenseApi';
