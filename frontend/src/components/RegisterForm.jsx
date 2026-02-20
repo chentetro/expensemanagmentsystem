@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import api from '../services/api';
+import expenseApi from '../services/expenseApi';
 
 const RegisterForm = ({ setIsLogin }) => {
     const [formData, setFormData] = useState({
@@ -11,12 +11,12 @@ const RegisterForm = ({ setIsLogin }) => {
         birthday: ''
     });
 
-    const [error, setError] = useState(''); // מצב להצגת שגיאות
-    const [isLoading, setIsLoading] = useState(false); // מצב טעינה
+    const [error, setError] = useState('');
+    const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
-        if (error) setError(''); // ניקוי שגיאה בזמן הקלדה
+        if (error) setError('');
     };
 
     const handleRegister = async (e) => {
@@ -25,31 +25,30 @@ const RegisterForm = ({ setIsLogin }) => {
         setError('');
 
         try {
-            // קריאה ל-Endpoint של הוספת משתמש חדש
-            await api.post('/users/add', formData);
+            // Call register endpoint
+            await expenseApi.post('/users/add', formData);
             
-            alert('נרשמת בהצלחה! מעביר אותך להתחברות...');
+            alert('Registration successful! Redirecting to login...');
             
-            // סעיף 1: ניווט במקום רענון דף
+            // Navigate instead of refreshing the page
             setIsLogin(true); 
         } catch (err) {
-            // סעיף 3: טיפול בשגיאות ספציפיות
-            // בדיקה אם זו שגיאת רשת (השרת לא זמין)
+            // Handle specific API/network errors
             if (!err.response) {
-                setError('לא ניתן להתחבר לשרת. אנא ודא שהשרת פועל.');
+                setError('Cannot connect to server. Please make sure it is running.');
                 console.error('Network error:', err.message);
                 return;
             }
             
             const status = err.response?.status;
             if (status === 409) {
-                setError('המשתמש (אימייל או ת"ז) כבר קיים במערכת');
+                setError('User already exists (email or ID)');
             } else if (status === 400) {
-                setError(err.response?.data?.message || 'חלק מהנתונים שהזנת אינם תקינים');
+                setError(err.response?.data?.message || 'Some input data is invalid');
             } else if (status === 500) {
-                setError(err.response?.data?.message || 'שגיאת שרת. אנא נסה שוב מאוחר יותר.');
+                setError(err.response?.data?.message || 'Server error. Please try again later.');
             } else {
-                setError(err.response?.data?.message || 'שגיאה בתהליך ההרשמה');
+                setError(err.response?.data?.message || 'Registration failed');
             }
         } finally {
             setIsLoading(false);
@@ -58,9 +57,9 @@ const RegisterForm = ({ setIsLogin }) => {
 
     return (
         <form onSubmit={handleRegister} className="auth-form">
-            <h2>יצירת חשבון חדש</h2>
+            <h2>Create New Account</h2>
             
-            {/* הצגת הודעת שגיאה בתוך הממשק */}
+            {/* Show error message inline */}
             {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
 
             <input name="id" type="number" placeholder="ID Number" onChange={handleChange} required />
@@ -70,9 +69,9 @@ const RegisterForm = ({ setIsLogin }) => {
             <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
             <input name="birthday" type="date" placeholder="Birthday" onChange={handleChange} required />
             
-            {/* כפתור שמשנה את המלל בזמן טעינה ומונע לחיצות כפולות */}
+            {/* Disable while loading to prevent duplicate submits */}
             <button type="submit" disabled={isLoading}>
-                {isLoading ? 'יוצר חשבון...' : 'Create Account'}
+                {isLoading ? 'Creating account...' : 'Create Account'}
             </button>
         </form>
     );

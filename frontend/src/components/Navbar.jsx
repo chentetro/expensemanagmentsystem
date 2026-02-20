@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
-import api from '../services/api';
 import { CostsContext } from '../contexts/CostsContext.jsx';
 const Navbar = () => {
     const { isAuthenticated, handleLogout } = React.useContext(CostsContext);
@@ -21,12 +20,12 @@ const Navbar = () => {
             </div>
 
             <div style={{ display: 'flex', gap: '15px', alignItems: 'center' }}>
-                {/* קישורים שיופיעו תמיד או רק למחוברים - תלוי בהחלטה שלך */}
+                {/* Main navigation links */}
                 { <Link to="/dashboard" style={{ color: 'white', textDecoration: 'none' }}>Dashboard</Link>}
                 { <Link to="/report" style={{ color: 'white', textDecoration: 'none' }}>Reports</Link>}
                 { <Link to="/statistics" style={{ color: 'white', textDecoration: 'none' }}>Statistics</Link>}
 
-                {/* הצגת כפתור Login רק אם המשתמש *לא* מחובר */}
+                {/* Show login only when unauthenticated */}
                 {!isAuthenticated ? (
                     <Link to="/login" style={{ 
                         color: 'white', 
@@ -38,7 +37,7 @@ const Navbar = () => {
                         Login
                     </Link>
                 ) : (
-                    /* הצגת כפתור Logout רק אם המשתמש מחובר */
+                    /* Show logout only when authenticated */
                      <button
                         onClick={handleLogout} 
                         style={{ 

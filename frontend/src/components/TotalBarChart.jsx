@@ -2,9 +2,9 @@
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 
-// מקבל את הסכום הכולל (total) והמטבע (currency) כ-props
+// Receives total amount and currency as props
 const TotalBarChart = ({ total, currency  }) => {
-    // הנתונים לגרף עמודה הם פשוט אובייקט אחד
+    // Bar chart data is a single object
     const data = [{ name: 'Total Expenses', value: total }];
 
     return (
@@ -14,7 +14,7 @@ const TotalBarChart = ({ total, currency  }) => {
                 <BarChart data={data} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
                     <XAxis dataKey="name" />
                     <YAxis />
-                    <Tooltip formatter={(value) => `${value.toFixed(2)} ${currency}`} /> {/* מציג מטבע ב-tooltip */}
+                    <Tooltip formatter={(value) => `${value.toFixed(2)} ${currency}`} /> {/* Show currency in tooltip */}
                     <Bar dataKey="value" fill="#82ca9d" label={{ position: 'top' }} />
                 </BarChart>
             </ResponsiveContainer>
