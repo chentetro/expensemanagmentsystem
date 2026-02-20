@@ -35,7 +35,7 @@ const Navbar = () => {
                 >
                     <Typography
                         component={RouterLink}
-                        to="/dashboard"
+                        to="/login"
                         variant="h5"
                         sx={{
                             textDecoration: 'none',

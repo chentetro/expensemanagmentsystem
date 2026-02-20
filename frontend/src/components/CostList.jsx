@@ -10,10 +10,8 @@ const CostList = () => {
         try {
             await expenseApi.delete(`costs/delete/${id}`);
             fetchCosts();
-            alert('Cost deleted successfully');
         } catch (error) {
             console.error('Error deleting cost:', error);
-            alert('Failed to delete cost: ' + (error.response?.data?.message || error.message));
         }
     };
 

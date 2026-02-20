@@ -34,10 +34,8 @@ const AddCostForm = () => {
             
             // Reset the form
             setCostData({ description: '', sum: '', category: 'food', currency: 'USD', date: '' });
-            alert('Cost added successfully!');
         } catch (error) {
             console.error("Error adding cost:", error);
-            alert('Failed to add cost');
         } finally {
             setIsLoading(false); // End loading
         }

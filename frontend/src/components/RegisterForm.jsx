@@ -28,9 +28,7 @@ const RegisterForm = ({ setIsLogin }) => {
         try {
             // Call register endpoint
             await expenseApi.post('/users/add', formData);
-            
-            alert('Registration successful! Redirecting to login...');
-            
+
             // Navigate instead of refreshing the page
             setIsLogin(true); 
         } catch (err) {
