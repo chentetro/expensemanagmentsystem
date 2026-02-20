@@ -1,6 +1,6 @@
 import React, { useState, useContext } from 'react';
-import api from '../services/api';
-import PickYearMonth from '../components/PickYearMonth.jsx';
+import expenseApi from '../services/expenseApi';
+import YearMonthPicker from '../components/YearMonthPicker.jsx';
 import { CostsContext } from '../contexts/CostsContext.jsx';
 
 const ReportPage = () => {
@@ -11,11 +11,11 @@ const ReportPage = () => {
     const fetchReport = async (filters) => {
         setLoading(true);
         try {
-            const response = await api.get(`/reports?month=${filters.month}&year=${filters.year}`);
+            const response = await expenseApi.get(`/reports?month=${filters.month}&year=${filters.year}`);
             setReportData(response.data); 
         } catch (error) {
             console.error(error);
-            alert('שגיאה בטעינת הדו"ח.');
+            alert('Error loading report.');
         } finally {
             setLoading(false);
         }
@@ -28,15 +28,15 @@ const ReportPage = () => {
 
     return (
         <div style={{ padding: '20px' }}>
-            <h1>דו"ח הוצאות חודשי</h1>
-            <PickYearMonth onSearch={fetchReport} />
+            <h1>Monthly Expense Report</h1>
+            <YearMonthPicker onSearch={fetchReport} />
             <hr />
 
-            {loading && <p>טוען נתונים מהשרת...</p>}
+            {loading && <p>Loading data from server...</p>}
 
             {reportData && reportData.data ? (
                 <div>
-                    <h2>פירוט הוצאות</h2>
+                    <h2>Expense Details</h2>
                     
                     {Object.keys(reportData.data).map((category) => (
                         <div key={category} style={{ marginBottom: '15px' }}>
@@ -45,18 +45,18 @@ const ReportPage = () => {
                                 <ul>
                                     {reportData.data[category].map((item, index) => (
                                         <li key={index}>
-                                            יום {item.day}: {item.description} - <strong>{item.sum} {item.currency}</strong>
+                                            Day {item.day}: {item.description} - <strong>{item.sum} {item.currency}</strong>
                                         </li>
                                     ))}
                                 </ul>
                             ) : (
-                                <p>אין הוצאות בקטגוריה זו.</p>
+                                <p>No expenses in this category.</p>
                             )}
                         </div>
                     ))}
                 </div>
             ) : (
-                !loading && <p>בחר חודש ושנה ולחץ על "הצג דו"ח"</p>
+                !loading && <p>Select month and year, then click "Show Report"</p>
             )}
         </div>
     );

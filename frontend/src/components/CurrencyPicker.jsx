@@ -1,6 +1,6 @@
 import React from "react";
 
-// מקבלים את הפרמטרים כאובייקט (Destructuring)
+// Receive component props via object destructuring
 const CurrencyPicker = ({ selectedCurrency, onChange }) => {
     return (
         <select 

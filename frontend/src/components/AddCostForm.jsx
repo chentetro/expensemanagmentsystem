@@ -1,9 +1,9 @@
 import React, { useState, useContext } from 'react';
 import { CostsContext } from '../contexts/CostsContext.jsx';
-import api from '../services/api';
+import expenseApi from '../services/expenseApi';
 
 const AddCostForm = () => {
-    // צריכת ה-Context מה-Dashboard
+    // Consume context values used by the dashboard
     const { fetchCosts } = useContext(CostsContext);
     
     const [isLoading, setIsLoading] = useState(false);
@@ -13,24 +13,24 @@ const AddCostForm = () => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true); // התחלת טעינה
+        setIsLoading(true); // Start loading
 
         try {
-            // המרת ה-sum למספר לפני השליחה
+            // Convert sum to number before sending
             const payload = { ...costData, sum: Number(costData.sum) };
             
-            await api.post('/costs/add', payload);
+            await expenseApi.post('/costs/add', payload);
             
-            await fetchCosts(); // רענון הרשימה ב-Dashboard
+            await fetchCosts(); // Refresh dashboard list
             
-            // איפוס הטופס
+            // Reset the form
             setCostData({ description: '', sum: '', category: 'food', currency: 'USD', date: '' });
-            alert('הוצאה נוספה בהצלחה!');
+            alert('Cost added successfully!');
         } catch (error) {
             console.error("Error adding cost:", error);
-            alert('חלה שגיאה בהוספת ההוצאה');
+            alert('Failed to add cost');
         } finally {
-            setIsLoading(false); // סיום טעינה
+            setIsLoading(false); // End loading
         }
     };
 
@@ -40,7 +40,7 @@ const AddCostForm = () => {
                 name="description" 
                 value={costData.description} 
                 onChange={(e) => setCostData({...costData, description: e.target.value})} 
-                placeholder="תיאור" 
+                placeholder="Description" 
                 required 
             />
             <input 
@@ -48,7 +48,7 @@ const AddCostForm = () => {
                 type="number" 
                 value={costData.sum} 
                 onChange={(e) => setCostData({...costData, sum: e.target.value})} 
-                placeholder="סכום" 
+                placeholder="Amount" 
                 required 
             />
             <select 
@@ -56,11 +56,11 @@ const AddCostForm = () => {
                 value={costData.category} 
                 onChange={(e) => setCostData({...costData, category: e.target.value})} 
             >
-                <option value="food">אוכל</option>
-                <option value="health">בריאות</option>
-                <option value="housing">דיור</option>
-                <option value="sports">ספורט</option>
-                <option value="education">חינוך</option>
+                <option value="food">Food</option>
+                <option value="health">Health</option>
+                <option value="housing">Housing</option>
+                <option value="sports">Sports</option>
+                <option value="education">Education</option>
             </select>
             <select 
                 name="currency" 
@@ -80,7 +80,7 @@ const AddCostForm = () => {
             />
 
             <button type="submit" disabled={isLoading}>
-                {isLoading ? 'שומר...' : 'הוסף הוצאה'}
+                {isLoading ? 'Saving...' : 'Add Cost'}
             </button>
         </form>
     );

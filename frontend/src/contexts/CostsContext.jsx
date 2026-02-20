@@ -1,5 +1,5 @@
 import React, { createContext, useState, useEffect, useCallback } from 'react';
-import api from '../services/api';
+import expenseApi from '../services/expenseApi';
 
 const CostsContext = createContext();
 
@@ -7,10 +7,10 @@ const CostsProvider = ({ children }) => {
     const [costs, setCosts] = useState([]);
     const [isAuthenticated, setIsAuthenticated] = useState(false);
 
-    // פונקציה לבדיקת סטטוס התחברות (טובה לטעינה ראשונית)
+    // Check authentication status on initial load
     const checkAuth = useCallback(async () => {
         try {
-            await api.get('/users/me');
+            await expenseApi.get('/users/me');
             setIsAuthenticated(true);
         } catch (error) {
             setIsAuthenticated(false);
@@ -21,14 +21,14 @@ const CostsProvider = ({ children }) => {
         checkAuth();
     }, [checkAuth]);
 
-    // פונקציה לעדכון מצב מחובר (תקראי לה מדף ה-Login)
+    // Update auth state after successful login
     const login = () => setIsAuthenticated(true);
 
     const handleLogout = async () => {
         try {
-            await api.post('/users/logout');
+            await expenseApi.post('/users/logout');
             setIsAuthenticated(false);
-            // שימי לב: ה-navigate יבוצע בקומפוננטה שקוראת ל-logout או כאן אם תעבירי אותו
+            // Route navigation is handled by calling components
         } catch (error) {
             console.error('Logout failed', error);
         }
@@ -36,7 +36,7 @@ const CostsProvider = ({ children }) => {
 
     const fetchCosts = useCallback(async () => {
         try {
-            const response = await api.get('/costs/list');
+            const response = await expenseApi.get('/costs/list');
             setCosts(response.data);
         } catch (error) {
             console.error('Error fetching costs:', error);
@@ -49,7 +49,7 @@ const CostsProvider = ({ children }) => {
             setCosts, 
             fetchCosts, 
             isAuthenticated, 
-            login, // ייצוא פונקציית ה-login
+            login,
             handleLogout 
         }}>
             {children}

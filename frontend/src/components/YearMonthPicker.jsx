@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 
-const PickYearMonth = ({ onSearch }) => {
-    // 1. חישוב השנה הנוכחית בצורה אוטומטית
-    const currentYear = new Date().getFullYear(); 
-    
-    // 2. יצירת רשימת שנים דינמית (למשל מ-2024 ועד השנה הנוכחית + 1)
+const YearMonthPicker = ({ onSearch }) => {
+    const currentYear = new Date().getFullYear();
+
     const startYear = 2024;
     const years = [];
     for (let y = currentYear + 2; y >= startYear; y--) {
@@ -28,7 +26,7 @@ const PickYearMonth = ({ onSearch }) => {
     return (
         <form onSubmit={handleSubmit} style={{ display: 'flex', gap: '10px', alignItems: 'center' }}>
             <div>
-                <label>חודש: </label>
+                <label>Month: </label>
                 <select name="month" value={filters.month} onChange={handleChange}>
                     {Array.from({ length: 12 }, (_, i) => (
                         <option key={i + 1} value={i + 1}>{i + 1}</option>
@@ -37,16 +35,16 @@ const PickYearMonth = ({ onSearch }) => {
             </div>
 
             <div>
-                <label>שנה: </label>
+                <label>Year: </label>
                 <select name="year" value={filters.year} onChange={handleChange}>
                     {years.map(year => (
                         <option key={year} value={year}>{year}</option>
                     ))}
                 </select>
-                <button type="submit" style={{ marginLeft: '10px' }}>הצג דו"ח</button>
+                <button type="submit" style={{ marginLeft: '10px' }}>Show Report</button>
             </div>
         </form>
     );
 };
 
-export default PickYearMonth;
+export default YearMonthPicker;

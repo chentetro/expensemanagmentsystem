@@ -1,36 +1,34 @@
 import React, { useEffect, useContext } from 'react';
 import AddCostForm from '../components/AddCostForm.jsx';
-import Costlist from '../components/Costlist.jsx';
+import CostList from '../components/CostList.jsx';
 import { CostsContext } from '../contexts/CostsContext.jsx';
 
-const Dashboard = () => {
+const DashboardPage = () => {
     const { fetchCosts, isAuthenticated } = useContext(CostsContext);
 
     useEffect(() => {
-        // Only fetch if authenticated and function exists
         if (isAuthenticated && fetchCosts) {
             fetchCosts();
         }
     }, [fetchCosts, isAuthenticated]);
 
-    // FIX: Added 'return' here
     if (!isAuthenticated) {
         return <p style={{ padding: '20px' }}>Please log in to view your dashboard.</p>;
     }
 
     return (
         <div style={{ padding: '20px' }}>
-            <h1>ניהול הוצאות</h1>
-            
+            <h1>Expense Management</h1>
+
             <section style={{ marginBottom: '30px' }}>
                 <AddCostForm />
             </section>
 
             <section>
-                <Costlist />
+                <CostList />
             </section>
         </div>
     );
 };
 
-export default Dashboard;
+export default DashboardPage;

@@ -1,14 +1,14 @@
-import React, { useState, useContext } from 'react'; // הוספנו useContext
+import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import api from '../services/api';
-import { CostsContext } from '../contexts/CostsContext.jsx'; // ייבוא ה-Context שלך
+import expenseApi from '../services/expenseApi';
+import { CostsContext } from '../contexts/CostsContext.jsx';
 
 const LoginForm = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     
-    const { login } = useContext(CostsContext); // חילוץ פונקציית ה-login מה-Context
+    const { login } = useContext(CostsContext);
     const navigator = useNavigate();
 
     const handleChange = (e) => {
@@ -22,25 +22,25 @@ const LoginForm = () => {
         setError('');
 
         try {
-            const response = await api.post('/users/login', credentials);
+            const response = await expenseApi.post('/users/login', credentials);
             
             if (response.status === 200) {
-                // השלב הקריטי: מעדכנים את ה-Context שהתחברנו בהצלחה
+                // Update auth context after successful login
                 login(); 
                 
-                // עכשיו אפשר לעבור לדף הבית - ה-Navbar כבר התעדכן ברקע
+                // Navigate to dashboard after context updates
                 navigator('/dashboard');
             }
         } catch (err) {
             const status = err.response?.status;
             if (status === 401) {
-                setError('אימייל או סיסמה לא נכונים');
+                setError('Incorrect email or password');
             } else if (status === 404) {
-                setError('משתמש לא נמצא, אולי כדאי להירשם?');
+                setError('User not found, please register first');
             } else if (status === 500) {
-                setError('יש תקלה בשרת, נסו שוב מאוחר יותר');
+                setError('Server error, please try again later');
             } else {
-                setError('קרתה שגיאה לא צפויה');
+                setError('Unexpected error occurred');
             }
         } finally {
             setIsLoading(false);
@@ -49,14 +49,14 @@ const LoginForm = () => {
 
     return (
         <form onSubmit={handleLogin} className="auth-form">
-            <h2>התחברות</h2>
+            <h2>Login</h2>
             {error && <div style={{ color: 'red', marginBottom: '10px' }}>{error}</div>}
             
             <input name="email" type="email" placeholder="Email" onChange={handleChange} required />
             <input name="password" type="password" placeholder="Password" onChange={handleChange} required />
             
             <button type="submit" disabled={isLoading}>
-                {isLoading ? 'מתחבר...' : 'Login'}
+                {isLoading ? 'Logging in...' : 'Login'}
             </button>
         </form>
     );
