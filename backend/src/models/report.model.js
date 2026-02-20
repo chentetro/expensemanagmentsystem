@@ -1,4 +1,8 @@
-import mongoose from "mongoose";// Implements the required computed design pattern by caching precomputed reports.
+/**
+ * Model: Report schema with cached monthly precomputed data.
+ */
+
+import mongoose from "mongoose";
 
 const reportSchema = new mongoose.Schema({
     userid:

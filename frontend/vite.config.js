@@ -1,3 +1,6 @@
+/**
+ * Vite configuration for the React frontend app.
+ */
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 

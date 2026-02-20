@@ -1,3 +1,7 @@
+/**
+ * Routes: cost API endpoints (add, delete, update, list).
+ */
+
 import { Router } from 'express';
 import { addCost, deleteCost, getCosts, updateCost } from './cost.controller.js';
 import { verifyToken } from '../../middleware/auth.middleware.js';

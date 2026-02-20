@@ -1,3 +1,7 @@
+/**
+ * Page: monthly report view with year/month picker and cost list.
+ */
+
 import React, { useState, useContext } from 'react';
 import expenseApi from '../services/expenseApi';
 import YearMonthPicker from '../components/YearMonthPicker.jsx';

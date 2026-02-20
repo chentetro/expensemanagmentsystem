@@ -1,3 +1,7 @@
+/**
+ * Component: currency selector (ILS, USD, GBP, EUR).
+ */
+
 import React from 'react';
 import { FormControl, InputLabel, MenuItem, Select } from '@mui/material';
 

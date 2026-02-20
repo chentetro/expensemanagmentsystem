@@ -1,4 +1,7 @@
-// TotalBarChart.jsx
+/**
+ * Component: bar chart for total monthly expenses.
+ */
+
 import React from 'react';
 import { BarChart, Bar, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
 

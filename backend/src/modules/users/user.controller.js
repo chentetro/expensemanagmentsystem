@@ -1,3 +1,7 @@
+/**
+ * Controller: user request handlers for registration and auth.
+ */
+
 import logger from '../../config/logger.js';
 import asyncHandler from '../../utils/asyncHandler.js';
 import {

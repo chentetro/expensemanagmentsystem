@@ -1,3 +1,7 @@
+/**
+ * Component: cost list with delete action.
+ */
+
 import React, { useContext } from 'react';
 import { CostsContext } from '../contexts/CostsContext.jsx';
 import expenseApi from '../services/expenseApi';

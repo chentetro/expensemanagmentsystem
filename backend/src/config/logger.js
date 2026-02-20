@@ -1,4 +1,7 @@
-// Configure Pino and send logs to MongoDB.
+/**
+ * Config: Pino logger with MongoDB transport.
+ */
+
 import 'dotenv/config';
 import pino from 'pino';
 

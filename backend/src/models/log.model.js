@@ -1,3 +1,7 @@
+/**
+ * Model: Log schema for audit and request history.
+ */
+
 import mongoose from 'mongoose';
 
 const logSchema = new mongoose.Schema({

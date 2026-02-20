@@ -1,3 +1,7 @@
+/**
+ * Service: report build and cache logic for monthly data.
+ */
+
 import { Cost } from '../../models/cost.model.js';
 import { Report } from '../../models/report.model.js';
 

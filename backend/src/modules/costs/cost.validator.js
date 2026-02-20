@@ -1,3 +1,7 @@
+/**
+ * Validator: request validation for cost create/update.
+ */
+
 import { ALLOWED_CURRENCIES, COST_CATEGORIES } from '../../constants/enums.js';
 import ApiError from '../../utils/apiError.js';
 

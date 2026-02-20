@@ -1,3 +1,7 @@
+/**
+ * Service: user CRUD, auth, and password hashing.
+ */
+
 import bcrypt from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { User } from '../../models/user.model.js';

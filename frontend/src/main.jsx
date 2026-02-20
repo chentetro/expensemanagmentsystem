@@ -1,3 +1,7 @@
+/**
+ * Entry point: React root, theme provider, and CssBaseline.
+ */
+
 import { StrictMode } from 'react'
 import { createRoot } from 'react-dom/client'
 import { CssBaseline, ThemeProvider } from '@mui/material'

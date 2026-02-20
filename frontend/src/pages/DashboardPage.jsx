@@ -1,3 +1,7 @@
+/**
+ * Page: dashboard with add-cost form and cost list.
+ */
+
 import React, { useEffect, useContext } from 'react';
 import AddCostForm from '../components/AddCostForm.jsx';
 import CostList from '../components/CostList.jsx';

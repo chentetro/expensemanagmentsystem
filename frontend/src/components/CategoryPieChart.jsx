@@ -1,4 +1,7 @@
-// CategoryPieChart.jsx
+/**
+ * Component: pie chart for expenses by category.
+ */
+
 import React from 'react';
 import { PieChart, Pie, Cell, Tooltip, ResponsiveContainer } from 'recharts';
 

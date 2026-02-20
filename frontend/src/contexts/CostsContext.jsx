@@ -1,3 +1,7 @@
+/**
+ * Context: costs state, auth status, and API helpers.
+ */
+
 import React, { createContext, useState, useEffect, useCallback } from 'react';
 import expenseApi from '../services/expenseApi';
 

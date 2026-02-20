@@ -1,3 +1,7 @@
+/**
+ * Routes: report API endpoints.
+ */
+
 import { Router } from 'express';
 import { getReport } from './report.controller.js';
 import { verifyToken } from '../../middleware/auth.middleware.js';

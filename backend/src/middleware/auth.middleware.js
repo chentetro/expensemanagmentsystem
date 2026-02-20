@@ -1,3 +1,7 @@
+/**
+ * Middleware: JWT token verification from cookies.
+ */
+
 import jwt from 'jsonwebtoken';
 import logger from '../config/logger.js';
 

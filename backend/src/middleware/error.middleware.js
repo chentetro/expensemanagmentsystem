@@ -1,3 +1,7 @@
+/**
+ * Middleware: 404 handler and global error handler.
+ */
+
 import logger from '../config/logger.js';
 import ApiError from '../utils/apiError.js';
 

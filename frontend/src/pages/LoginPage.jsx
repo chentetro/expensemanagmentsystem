@@ -1,3 +1,7 @@
+/**
+ * Page: login and register with tab toggle.
+ */
+
 import React, { useState } from 'react';
 import LoginForm from '../components/LoginForm';
 import RegisterForm from '../components/RegisterForm';

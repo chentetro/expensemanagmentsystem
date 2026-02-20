@@ -1,3 +1,7 @@
+/**
+ * Controller: cost request handlers for CRUD operations.
+ */
+
 import logger from '../../config/logger.js';
 import asyncHandler from '../../utils/asyncHandler.js';
 import {
