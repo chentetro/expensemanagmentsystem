@@ -1,19 +1,19 @@
-//הקובץ שבו נגדיר את ה-Pino ונגיד לו לשלוח את הנתונים ל-MongoDB.
+// Configure Pino and send logs to MongoDB.
 import 'dotenv/config';
 import pino from 'pino';
 
-// הגדרת הלוגר
+// Logger setup
 const logger = pino({
-    level: 'info', // רמת הפירוט המינימלית שנשמור
-    base: { service: 'expense-management-system' }, // שם השירות שלנו
-    timestamp: pino.stdTimeFunctions.isoTime, // פורמט זמן קריא
+    level: 'info', // Minimum log level to persist
+    base: { service: 'expense-management-system' }, // Service name
+    timestamp: pino.stdTimeFunctions.isoTime, // Human-readable timestamp format
 }, 
-// כאן אנחנו אומרים לו לשלוח את הנתונים ל-MongoDB
+// Configure transport target for MongoDB
 pino.transport({
     target: 'pino-mongodb',
     options: {
-        uri: process.env.MONGODB_URI, // משתמש בכתובת של ה-DB שלך מהקובץ .env
-        collection: 'logs', // שם הטבלה שבה יישמרו הלוגים
+        uri: process.env.MONGODB_URI, // Uses DB connection URI from .env
+        collection: 'logs', // Collection where logs are stored
     },
 }));
 

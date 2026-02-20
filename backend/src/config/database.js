@@ -1,5 +1,5 @@
 import mongoose from'mongoose';
-import logger from "../config/logger.js"; // ייבוא הלוגר
+import logger from "../config/logger.js"; // Logger import
 
 const connectDB= async()=>{
     try {

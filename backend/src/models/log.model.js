@@ -1,25 +1,25 @@
 import mongoose from 'mongoose';
 
 const logSchema = new mongoose.Schema({
-    // 'info' לפעולות תקינות ו-'error' לשגיאות. מאפשר לסנן לוגים בקלות ב-Compass.
+    // 'info' for successful operations and 'error' for failures; useful for filtering in Compass.
     level: { type: String, default: 'info' }, 
     
-    // תיאור קצר של הפעולה (למשל: "Fetching monthly report").
+    // Short action description (for example: "Fetching monthly report").
     message: { type: String, required: true },
     
-    // עוזר להבין איזה סוג בקשה בוצעה (GET/POST).
+    // Helps identify request method type (GET/POST).
     method: { type: String },
     
-    // הכתובת המדויקת. חשוב כדי לדעת איזה Endpoint הכי פעיל.
+    // Exact endpoint URL, useful for identifying high-traffic routes.
     url: { type: String },
     
-    // קריטי! מאפשר לראות הצלחות (200/201) מול כישלונות (400/500) במבט חטוף.
+    // Critical for quickly comparing successes (200/201) vs failures (400/500).
     status: { type: Number },
     
-    // מקשר את הפעולה למשתמש ספציפי. חיוני למעקב אחרי פעילות חשודה או תקלות של משתמש.
+    // Associates the log with a specific user for troubleshooting and audit tracking.
     userid: { type: Number }, 
     
-    // נוצר אוטומטית. מאפשר לסדר את הלוגים לפי סדר כרונולוגי.
+    // Auto-generated timestamp for chronological sorting.
     timestamp: { type: Date, default: Date.now }
 });
 
