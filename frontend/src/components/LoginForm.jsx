@@ -2,7 +2,7 @@ import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import expenseApi from '../services/expenseApi';
 import { CostsContext } from '../contexts/CostsContext.jsx';
-import { Alert, Button, Stack, TextField, Typography } from '@mui/material';
+import { Alert, Button, Stack, TextField } from '@mui/material';
 
 const LoginForm = () => {
     const [credentials, setCredentials] = useState({ email: '', password: '' });
@@ -50,13 +50,13 @@ const LoginForm = () => {
 
     return (
         <Stack component="form" onSubmit={handleLogin} spacing={2} sx={{ width: '100%' }}>
-            <Typography variant="h5" textAlign="center">Login</Typography>
             {error && <Alert severity="error">{error}</Alert>}
 
             <TextField
                 name="email"
                 type="email"
                 label="Email"
+                value={credentials.email}
                 onChange={handleChange}
                 required
                 fullWidth
@@ -65,12 +65,13 @@ const LoginForm = () => {
                 name="password"
                 type="password"
                 label="Password"
+                value={credentials.password}
                 onChange={handleChange}
                 required
                 fullWidth
             />
 
-            <Button type="submit" variant="contained" disabled={isLoading}>
+            <Button type="submit" variant="contained" fullWidth disabled={isLoading}>
                 {isLoading ? 'Logging in...' : 'Login'}
             </Button>
         </Stack>

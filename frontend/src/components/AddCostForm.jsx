@@ -98,7 +98,7 @@ const AddCostForm = () => {
                     onChange={(e) => setCostData({ ...costData, currency: e.target.value })}
                 >
                     <MenuItem value="USD">USD</MenuItem>
-                    <MenuItem value="EURO">EURO</MenuItem>
+                    <MenuItem value="EUR">EUR</MenuItem>
                     <MenuItem value="ILS">ILS</MenuItem>
                     <MenuItem value="GBP">GBP</MenuItem>
                 </Select>

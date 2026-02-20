@@ -90,7 +90,7 @@ const StatisticsPage = () => {
      if (!isAuthenticated) {
         return (
             <Container sx={{ py: 4 }}>
-                <Alert severity="info">Please log in to view your bar and pie.</Alert>
+                <Alert severity="info">Please log in to view your statistics.</Alert>
             </Container>
         );
     }
