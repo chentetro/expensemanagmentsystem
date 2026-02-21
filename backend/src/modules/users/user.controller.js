@@ -32,9 +32,9 @@ export const loginUser = asyncHandler(async (req, res) => {
 
     res.cookie('token', token, {
         httpOnly: true,
-        secure: false,
-        maxAge: 24 * 60 * 60 * 1000,
-        domain: 'localhost'
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax',
+        maxAge: 24 * 60 * 60 * 1000
     });
 
     logger.info(
@@ -49,7 +49,11 @@ export const loginUser = asyncHandler(async (req, res) => {
 });
 
 export const logoutUser = (req, res) => {
-    res.clearCookie('token');
+    res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: process.env.NODE_ENV === 'production' ? 'none' : 'lax'
+    });
     logger.info(
         { method: 'POST', url: '/api/users/logout', status: 200, userid: req.user?.userid || 'N/A' },
         'User logged out successfully'
