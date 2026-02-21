@@ -4,6 +4,8 @@ Welcome to the **Expense Management System**! A powerful full-stack web applicat
 
 ## 🔗 [Click here to view the Live Site](https://expensemanagmentsystem-frontend.onrender.com)
 
+## 🎥 [Watch the Project Video](https://youtu.be/sdXNX5fvA0E)
+
 ---
 
 ## 🚀 Overview
