@@ -15,8 +15,16 @@ const app = express();
 // Middlewares
 app.use(express.json());
 app.use(cookieParser());
-app.use(cors({ 
-    origin: 'https://expensemanagmentsystem-frontend.onrender.com',
+
+// CORS: use CORS_ORIGIN env (comma-separated for multiple) or fallbacks
+const corsOrigins = process.env.CORS_ORIGIN
+    ? process.env.CORS_ORIGIN.split(',').map(s => s.trim())
+    : process.env.NODE_ENV === 'production'
+        ? ['https://expensemanagementsystem-frontend.onrender.com', 'https://expensemanagementsyst.com']
+        : ['http://localhost:5173', 'http://localhost:3000'];
+
+app.use(cors({
+    origin: corsOrigins,
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS']
 }));
