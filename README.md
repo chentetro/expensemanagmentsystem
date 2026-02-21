@@ -15,7 +15,6 @@ This project is a modern, full-stack solution built with a focus on security and
 * 🔐 **Secure Authentication:** Implementation using JWT and HttpOnly cookies.
 * 📊 **Dashboard & Statistics:** Track spending patterns with visual reports.
 * ➕ **Expense Management:** Add, edit, and categorize daily expenses.
-* 📱 **Responsive Design:** Fully optimized for both desktop and mobile users.
 * 🛡️ **CORS Protected:** Secure communication between Frontend and Backend.
 
 ---
