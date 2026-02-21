@@ -1,16 +1,40 @@
-# React + Vite
+# 💼 Expense Management System
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Welcome to the **Expense Management System**! A powerful full-stack web application designed to help you track your daily spending, manage expenses, and visualize your financial patterns with ease.
 
-Currently, two official plugins are available:
+## 🔗 [Click here to view the Live Site](https://expensemanagmentsystem-frontend.onrender.com)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## React Compiler
+## 🚀 Overview
+This project is a modern, full-stack solution built with a focus on security and user experience. It allows users to securely register, log in, and manage their finances through an intuitive dashboard.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### Key Features:
+* 🔐 **Secure Authentication:** Implementation using JWT and HttpOnly cookies.
+* 📊 **Dashboard & Statistics:** Track spending patterns with visual reports.
+* ➕ **Expense Management:** Add, edit, and categorize daily expenses.
+* 📱 **Responsive Design:** Fully optimized for both desktop and mobile users.
+* 🛡️ **CORS Protected:** Secure communication between Frontend and Backend.
 
-## Expanding the ESLint configuration
+---
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠️ Tech Stack
+
+### Frontend
+* **React + Vite** ⚛️⚡ - High-performance user interface.
+* **Material UI (MUI)** 🎨 - Modern and clean component design.
+* **Axios** 🔌 - Reliable API communication.
+* **React Router** 🧭 - Smooth client-side navigation.
+
+### Backend
+* **Node.js + Express** 🚀 - Fast and scalable server-side environment.
+* **MongoDB + Mongoose** 🍃 - Flexible NoSQL database for data persistence.
+* **JWT** 🔐 - Industry-standard secure authentication.
+
+---
+
+## ⚙️ Installation & Setup
+
+1. **Clone the repository:**
+   ```bash
+   git clone [https://github.com/chentetro/expensemanagmentsystem.git]
