@@ -37,4 +37,20 @@ This project is a modern, full-stack solution built with a focus on security and
 
 1. **Clone the repository:**
    ```bash
-   git clone [https://github.com/chentetro/expensemanagmentsystem.git]
+   git clone https://github.com/chentetro/expensemanagmentsystem.git
+   cd expensemanagmentsystem
+   ```
+
+2. **Install backend dependencies and run backend:**
+   ```bash
+   cd backend
+   npm install
+   npm run dev
+   ```
+
+3. **Install frontend dependencies and run frontend (new terminal):**
+   ```bash
+   cd frontend
+   npm install
+   npm run dev
+   ```
