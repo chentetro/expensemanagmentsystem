@@ -1,10 +1,10 @@
 /**
  * Service: axios API client with auth and interceptors.
  */
-
 import axios from 'axios';
 
-const API_URL = 'http://localhost:3000/api';
+// משתמש בכתובת מ-Render, ואם היא לא קיימת (למשל בעבודה מקומית) משתמש ב-localhost
+const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 const expenseApi = axios.create({
     baseURL: API_URL,
