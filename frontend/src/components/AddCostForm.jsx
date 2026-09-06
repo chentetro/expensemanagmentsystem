@@ -4,8 +4,9 @@
 
 import React, { useState, useContext } from 'react';
 import { CostsContext } from '../contexts/CostsContext.jsx';
-import expenseApi from '../services/expenseApi';
+import { addCost } from '../services/expenseApi';
 import {
+    Alert,
     Button,
     FormControl,
     InputLabel,
@@ -15,51 +16,88 @@ import {
     TextField
 } from '@mui/material';
 
+const getToday = () => {
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = String(today.getMonth() + 1).padStart(2, '0');
+    const day = String(today.getDate()).padStart(2, '0');
+
+    return `${year}-${month}-${day}`;
+};
+
+const INITIAL_COST_STATE = {
+    description: '',
+    sum: '',
+    category: 'food',
+    currency: 'USD',
+    date: getToday()
+};
+
 const AddCostForm = () => {
     // Consume context values used by the dashboard
     const { fetchCosts } = useContext(CostsContext);
     
     const [isLoading, setIsLoading] = useState(false);
-    const [costData, setCostData] = useState({
-        description: '', sum: '', category: 'food', currency: 'USD', date: ''
-    });
+    const [errorMessage, setErrorMessage] = useState('');
+    const [costData, setCostData] = useState(INITIAL_COST_STATE);
+
+    const handleChange = (e) => {
+        const { name, value } = e.target;
+
+        setCostData((previousData) => ({
+            ...previousData,
+            [name]: value
+        }));
+        setErrorMessage('');
+    };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        setIsLoading(true); // Start loading
+
+        const amount = Number(costData.sum);
+        if (!Number.isFinite(amount) || amount <= 0) {
+            setErrorMessage('Amount must be greater than 0.');
+            return;
+        }
+
+        setIsLoading(true);
+        setErrorMessage('');
 
         try {
-            // Convert sum to number before sending
-            const payload = { ...costData, sum: Number(costData.sum) };
+            await addCost({ ...costData, sum: amount });
             
-            await expenseApi.post('/costs/add', payload);
+            await fetchCosts();
             
-            await fetchCosts(); // Refresh dashboard list
-            
-            // Reset the form
-            setCostData({ description: '', sum: '', category: 'food', currency: 'USD', date: '' });
+            setCostData({ ...INITIAL_COST_STATE });
         } catch (error) {
-            console.error("Error adding cost:", error);
+            setErrorMessage(error.response?.data?.message || 'Unable to add the expense.');
         } finally {
-            setIsLoading(false); // End loading
+            setIsLoading(false);
         }
     };
 
     return (
-        <Stack
-            component="form"
-            onSubmit={handleSubmit}
-            direction={{ xs: 'column', md: 'row' }}
-            spacing={1.5}
-            useFlexGap
-            flexWrap="wrap"
-            alignItems={{ xs: 'stretch', md: 'center' }}
-        >
+        <>
+            {errorMessage && (
+                <Alert severity="error" sx={{ mb: 2 }}>
+                    {errorMessage}
+                </Alert>
+            )}
+
+            <Stack
+                component="form"
+                onSubmit={handleSubmit}
+                direction={{ xs: 'column', md: 'row' }}
+                spacing={1.5}
+                useFlexGap
+                flexWrap="wrap"
+                alignItems={{ xs: 'stretch', md: 'center' }}
+            >
             <TextField
                 name="description"
                 label="Description"
                 value={costData.description}
-                onChange={(e) => setCostData({ ...costData, description: e.target.value })}
+                onChange={handleChange}
                 required
                 size="small"
             />
@@ -68,7 +106,8 @@ const AddCostForm = () => {
                 type="number"
                 label="Amount"
                 value={costData.sum}
-                onChange={(e) => setCostData({ ...costData, sum: e.target.value })}
+                onChange={handleChange}
+                inputProps={{ min: 0.01, step: 'any' }}
                 required
                 size="small"
             />
@@ -80,7 +119,7 @@ const AddCostForm = () => {
                     name="category"
                     label="Category"
                     value={costData.category}
-                    onChange={(e) => setCostData({ ...costData, category: e.target.value })}
+                    onChange={handleChange}
                 >
                     <MenuItem value="food">Food</MenuItem>
                     <MenuItem value="health">Health</MenuItem>
@@ -97,7 +136,7 @@ const AddCostForm = () => {
                     name="currency"
                     label="Currency"
                     value={costData.currency}
-                    onChange={(e) => setCostData({ ...costData, currency: e.target.value })}
+                    onChange={handleChange}
                 >
                     <MenuItem value="USD">USD</MenuItem>
                     <MenuItem value="EUR">EUR</MenuItem>
@@ -111,7 +150,7 @@ const AddCostForm = () => {
                 type="date"
                 label="Date"
                 value={costData.date}
-                onChange={(e) => setCostData({ ...costData, date: e.target.value })}
+                onChange={handleChange}
                 InputLabelProps={{ shrink: true }}
                 size="small"
             />
@@ -119,7 +158,8 @@ const AddCostForm = () => {
             <Button type="submit" variant="contained" disabled={isLoading}>
                 {isLoading ? 'Saving...' : 'Add Cost'}
             </Button>
-        </Stack>
+            </Stack>
+        </>
     );
 };
 

@@ -21,7 +21,7 @@ const corsOrigins = process.env.CORS_ORIGIN
     ? process.env.CORS_ORIGIN.split(',').map(s => s.trim())
     : process.env.NODE_ENV === 'production'
         ? ['https://expensemanagementsystem-frontend.onrender.com', 'https://expensemanagmentsystem-frontend.onrender.com', 'https://expensemanagementsyst.com']
-        : ['http://localhost:5173', 'http://localhost:3000'];
+        : ['http://localhost:5173', 'http://localhost:3000','http://localhost:4000'];
 
 app.use(cors({
     origin: corsOrigins,

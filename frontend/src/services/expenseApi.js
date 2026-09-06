@@ -11,6 +11,8 @@ const expenseApi = axios.create({
     withCredentials: true,
 });
 
+export const addCost = (data) => expenseApi.post('/costs/add', data);
+
 expenseApi.interceptors.response.use(
     (response) => response,
     (error) => {
