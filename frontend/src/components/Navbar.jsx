@@ -5,40 +5,30 @@
 import React from 'react';
 import { Link as RouterLink, useLocation } from 'react-router-dom';
 import { CostsContext } from '../contexts/CostsContext.jsx';
-import { Box, Container, Stack, Typography } from '@mui/material';
+import { AppBar, Box, Button, Container, Stack, Toolbar, Typography } from '@mui/material';
+
+const NAV_ITEMS = [
+    { label: 'ADD COST', to: '/dashboard' },
+    { label: 'REPORT', to: '/report' },
+    { label: 'CHARTS', to: '/statistics' },
+];
 
 const Navbar = () => {
     const { isAuthenticated, handleLogout } = React.useContext(CostsContext);
     const location = useLocation();
 
-    const navItems = [
-        { label: 'ADD COST', to: '/dashboard' },
-        { label: 'REPORT', to: '/report' },
-        { label: 'CHARTS', to: '/statistics' },
-    ];
-
     return (
-        <Box
-            sx={{
-                position: 'sticky',
-                top: 0,
-                zIndex: 1100,
-                bgcolor: 'background.paper',
-                borderBottom: '1px solid',
-                borderColor: 'rgba(0,0,0,0.06)',
-            }}
+        <AppBar
+            position="sticky"
+            color="inherit"
+            elevation={0}
+            sx={{ borderBottom: 1, borderColor: 'divider' }}
         >
             <Container maxWidth="lg">
-                <Stack
-                    direction={{ xs: 'column', sm: 'row' }}
-                    justifyContent="space-between"
-                    alignItems={{ xs: 'stretch', sm: 'center' }}
-                    spacing={0}
-                    sx={{ minHeight: 72 }}
-                >
+                <Toolbar disableGutters sx={{ minHeight: 72 }}>
                     <Typography
                         component={RouterLink}
-                        to="/login"
+                        to={isAuthenticated ? '/dashboard' : '/login'}
                         variant="h5"
                         sx={{
                             textDecoration: 'none',
@@ -59,97 +49,78 @@ const Navbar = () => {
                         Cost Manager
                     </Typography>
 
-                    <Stack direction="row" spacing={{ xs: 1.5, md: 2.5 }} flexWrap="wrap" useFlexGap>
-                        {navItems.map((item) => {
+                    <Stack
+                        direction="row"
+                        spacing={{ xs: 1.5, md: 2.5 }}
+                        flexWrap="wrap"
+                        useFlexGap
+                        sx={{ ml: 'auto' }}
+                    >
+                        {isAuthenticated && NAV_ITEMS.map((item) => {
                             const isActive = location.pathname === item.to;
+
                             return (
-                                <Box
+                                <Button
                                     key={item.to}
                                     component={RouterLink}
                                     to={item.to}
+                                    color="inherit"
                                     sx={{
                                         textDecoration: 'none',
                                         color: isActive ? 'text.primary' : 'text.secondary',
                                         fontWeight: 500,
                                         fontSize: 14,
                                         lineHeight: 1,
-                                        py: 1,
+                                        minWidth: 0,
+                                        borderRadius: 0,
                                         borderBottom: '2px solid',
                                         borderColor: isActive ? 'primary.main' : 'transparent',
                                         transition: 'color 0.2s ease, border-color 0.2s ease',
                                         '&:hover': {
                                             color: 'text.primary',
+                                            backgroundColor: 'transparent',
                                         },
                                     }}
                                 >
                                     {item.label}
-                                </Box>
+                                </Button>
                             );
                         })}
 
                         {!isAuthenticated ? (
-                            <Box
+                            <Button
+                                variant="outlined"
                                 component={RouterLink}
                                 to="/login"
+                                color="inherit"
                                 sx={{
-                                    appearance: 'none',
-                                    backgroundColor: 'grey.600',
-                                    border: '1px solid',
-                                    borderColor: 'grey.600',
-                                    borderRadius: 1,
-                                    textDecoration: 'none',
-                                    color: 'common.white',
                                     fontWeight: 700,
                                     fontSize: 14,
                                     lineHeight: 1,
-                                    fontFamily: 'inherit',
-                                    py: 1,
-                                    px: 2,
                                     alignSelf: 'center',
-                                    transition: 'background-color 0.2s ease, box-shadow 0.2s ease',
-                                    '&:hover': {
-                                        backgroundColor: 'grey.800',
-                                        boxShadow: 2,
-                                    },
                                 }}
                             >
                                 LOGIN
-                            </Box>
+                            </Button>
                         ) : (
-                            <Box
-                                component="button"
+                            <Button
                                 type="button"
                                 onClick={handleLogout}
+                                variant="contained"
                                 sx={{
-                                    appearance: 'none',
-                                    backgroundColor: 'primary.main',
-                                    border: '1px solid',
-                                    borderColor: 'primary.main',
-                                    borderRadius: 1,
-                                    textDecoration: 'none',
-                                    color: 'primary.contrastText',
                                     fontWeight: 700,
                                     fontSize: 14,
                                     lineHeight: 1,
-                                    fontFamily: 'inherit',
-                                    py: 1,
-                                    px: 2,
-                                    cursor: 'pointer',
                                     alignSelf: 'center',
-                                    transition: 'background-color 0.2s ease, box-shadow 0.2s ease',
-                                    '&:hover': {
-                                        backgroundColor: 'primary.dark',
-                                        boxShadow: 2,
-                                    },
                                 }}
                             >
                                 LOGOUT
-                            </Box>
+                            </Button>
                         )}
                     </Stack>
-                </Stack>
+                </Toolbar>
             </Container>
-        </Box>
+        </AppBar>
     );
 };
 
