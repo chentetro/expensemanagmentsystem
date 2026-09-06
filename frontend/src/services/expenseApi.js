@@ -12,6 +12,7 @@ const expenseApi = axios.create({
 });
 
 export const addCost = (data) => expenseApi.post('/costs/add', data);
+export const deleteCost = (id) => expenseApi.delete(`/costs/delete/${id}`);
 
 expenseApi.interceptors.response.use(
     (response) => response,
