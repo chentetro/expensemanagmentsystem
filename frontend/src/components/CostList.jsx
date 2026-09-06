@@ -5,13 +5,10 @@
 import React, { useContext, useState } from 'react';
 import { CostsContext } from '../contexts/CostsContext.jsx';
 import { deleteCost } from '../services/expenseApi';
+import CostItem from './CostItem.jsx';
 import {
     Alert,
-    Button,
-    CircularProgress,
     List,
-    ListItem,
-    ListItemText,
     Paper,
     Typography
 } from '@mui/material';
@@ -51,27 +48,12 @@ const CostList = () => {
             {costs.length > 0 ? (
                 <List>
                     {costs.map((cost) => (
-                        <ListItem
+                        <CostItem
                             key={cost._id}
-                            divider
-                            secondaryAction={
-                                <Button
-                                    color="error"
-                                    onClick={() => handleDeleteCost(cost._id)}
-                                    disabled={deletingId !== null}
-                                    startIcon={deletingId === cost._id ? <CircularProgress size={16} /> : null}
-                                >
-                                    {deletingId === cost._id ? 'Deleting...' : 'Delete'}
-                                </Button>
-                            }
-                        >
-                            <ListItemText
-                                primary={`${cost.description} - ${cost.sum} ${cost.currency}`}
-                                secondary={`${cost.category} - ${new Date(cost.createdAt).toLocaleDateString()}`}
-                                primaryTypographyProps={{ textTransform: 'capitalize' }}
-                                secondaryTypographyProps={{ textTransform: 'capitalize' }}
-                            />
-                        </ListItem>
+                            cost={cost}
+                            onDelete={handleDeleteCost}
+                            isDeleting={deletingId === cost._id}
+                        />
                     ))}
                 </List>
             ) : (
