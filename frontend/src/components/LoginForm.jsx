@@ -4,20 +4,24 @@
 
 import React, { useState, useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
-import expenseApi from '../services/expenseApi';
+import { loginUser } from '../services/expenseApi';
 import { CostsContext } from '../contexts/CostsContext.jsx';
 import { Alert, Button, Stack, TextField } from '@mui/material';
 
+const INITIAL_CREDENTIALS = { email: '', password: '' };
+
 const LoginForm = () => {
-    const [credentials, setCredentials] = useState({ email: '', password: '' });
+    const [credentials, setCredentials] = useState(INITIAL_CREDENTIALS);
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     
     const { login } = useContext(CostsContext);
-    const navigator = useNavigate();
+    const navigate = useNavigate();
 
     const handleChange = (e) => {
-        setCredentials({ ...credentials, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        setCredentials((prev) => ({ ...prev, [name]: value }));
         if (error) setError('');
     };
 
@@ -27,14 +31,14 @@ const LoginForm = () => {
         setError('');
 
         try {
-            const response = await expenseApi.post('/users/login', credentials);
+            const response = await loginUser(credentials);
             
             if (response.status === 200) {
                 // Update auth context after successful login
-                login(); 
+                login(response.data); 
                 
                 // Navigate to dashboard after context updates
-                navigator('/dashboard');
+                navigate('/dashboard');
             }
         } catch (err) {
             const status = err.response?.status;

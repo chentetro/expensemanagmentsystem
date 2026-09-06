@@ -13,6 +13,7 @@ const expenseApi = axios.create({
 
 export const addCost = (data) => expenseApi.post('/costs/add', data);
 export const deleteCost = (id) => expenseApi.delete(`/costs/delete/${id}`);
+export const loginUser = async (credentials) => expenseApi.post('/users/login', credentials);
 
 expenseApi.interceptors.response.use(
     (response) => response,
