@@ -3,7 +3,7 @@
  */
 
 import React, { useState, useContext } from 'react';
-import expenseApi from '../services/expenseApi';
+import { getMonthlyReport } from '../services/expenseApi';
 import YearMonthPicker from '../components/YearMonthPicker.jsx';
 import { CostsContext } from '../contexts/CostsContext.jsx';
 import {
@@ -28,7 +28,7 @@ const ReportPage = () => {
     const fetchReport = async (filters) => {
         setLoading(true);
         try {
-            const response = await expenseApi.get(`/reports?month=${filters.month}&year=${filters.year}`);
+            const response = await getMonthlyReport(filters.month, filters.year);
             setReportData(response.data); 
         } catch (error) {
             console.error(error);

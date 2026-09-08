@@ -15,6 +15,8 @@ export const addCost = (data) => expenseApi.post('/costs/add', data);
 export const deleteCost = (id) => expenseApi.delete(`/costs/delete/${id}`);
 export const loginUser = async (credentials) => expenseApi.post('/users/login', credentials);
 export const registerUser = async (userData) => expenseApi.post('/users/add', userData);
+export const getMonthlyReport = (month, year) =>
+    expenseApi.get('/reports', { params: { month, year } });
 
 expenseApi.interceptors.response.use(
     (response) => response,
