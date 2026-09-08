@@ -3,12 +3,11 @@
  */
 
 import React, { useState, useEffect, useMemo ,useContext} from 'react';
-import expenseApi from '../services/expenseApi';
+import { getExchangeRates, getMonthlyReport } from '../services/expenseApi';
 import YearMonthPicker from '../components/YearMonthPicker';
 import CurrencyPicker from '../components/CurrencyPicker';
 import TotalBarChart from '../components/TotalBarChart';
 import CategoryPieChart from '../components/CategoryPieChart';
-import axios from 'axios';
 import { CostsContext } from '../contexts/CostsContext.jsx';
 import {
     Alert,
@@ -31,18 +30,8 @@ const StatisticsPage = () => {
     // Fetch exchange rates once on component mount
     useEffect(() => {
         const fetchRates = async () => {
-            try {
-                const response = await axios.get('https://open.er-api.com/v6/latest/ILS');
-                const data = response.data.rates;
-                setExchangeRates({
-                    ILS: 1,
-                    USD: 1 / data.USD,
-                    EUR: 1 / data.EUR,
-                    GBP: 1 / data.GBP
-                });
-            } catch (error) {
-                console.error("Failed to fetch exchange rates, using default values.", error);
-            }
+            const rates = await getExchangeRates();
+            setExchangeRates(rates);
         };
         fetchRates();
     }, []);
@@ -50,7 +39,7 @@ const StatisticsPage = () => {
     const fetchStats = async (filters) => {
         setLoading(true);
         try {
-            const response = await expenseApi.get(`/reports?month=${filters.month}&year=${filters.year}`);
+            const response = await getMonthlyReport(filters.month, filters.year);
             setCategoriesData(response.data);
         } catch (error) {
             console.error("Error fetching report:", error);
