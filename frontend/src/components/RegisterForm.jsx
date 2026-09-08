@@ -3,24 +3,28 @@
  */
 
 import React, { useState } from 'react';
-import expenseApi from '../services/expenseApi';
+import { registerUser } from '../services/expenseApi';
 import { Alert, Button, Stack, TextField } from '@mui/material';
 
+const INITIAL_FORM_DATA = {
+    id: '',
+    first_name: '',
+    last_name: '',
+    email: '',
+    password: '',
+    birthday: ''
+};
+
 const RegisterForm = ({ setIsLogin }) => {
-    const [formData, setFormData] = useState({
-        id: '',
-        first_name: '',
-        last_name: '',
-        email: '',
-        password: '',
-        birthday: ''
-    });
+    const [formData, setFormData] = useState(INITIAL_FORM_DATA);
 
     const [error, setError] = useState('');
     const [isLoading, setIsLoading] = useState(false);
 
     const handleChange = (e) => {
-        setFormData({ ...formData, [e.target.name]: e.target.value });
+        const { name, value } = e.target;
+
+        setFormData((prev) => ({ ...prev, [name]: value }));
         if (error) setError('');
     };
 
@@ -30,11 +34,9 @@ const RegisterForm = ({ setIsLogin }) => {
         setError('');
 
         try {
-            // Call register endpoint
-            await expenseApi.post('/users/add', formData);
+            await registerUser(formData);
 
-            // Navigate instead of refreshing the page
-            setIsLogin(true); 
+            setIsLogin(true);
         } catch (err) {
             // Handle specific API/network errors
             if (!err.response) {
